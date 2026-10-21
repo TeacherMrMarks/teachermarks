@@ -1,0 +1,30 @@
+TEACHER MARKS CENTRAL V390 — SITE COMPLETO / HOMOLOGACAO
+
+ESTRUTURA: todos os arquivos do repositorio recebidos; index.html com a Central inteira, novo painel visual e Estudio de Slides redesenhado, 30 modelos, pastas e bibliotecas.
+
+IMPORTANTE: ESTE PACOTE NAO DEVE SUBSTITUIR A V389 DE PRODUCAO ATE OS TESTES REAIS NO NETLIFY.
+
+PERSISTENCIA IMPLEMENTADA
+- Endpoint tm-data.mjs grava e le registros individuais do Netlify Blobs, isolados por usuario autenticado, com controle de revisao ETag.
+- No navegador, acompanha TM40/IndexedDB e localStorage para registros permitidos (sao muitos modulos).
+- Salva automaticamente quando o servidor confirma a gravacao e mostra pendencias se sem rede, com lista de chaves pendentes preservada entre sessoes (o valor permanece no IndexedDB/localStorage).
+- Recupera registros guardados no Netlify em outro dispositivo e evita sobrescrever silenciosamente quando ha uma edicao local pendente.
+- Os identificadores de contas, senhas, preferencias temporarias, tokens e segredos ficam fora da sincronizacao.
+- Banco Netlify Blobs usado: teacher-marks-records-v390. O banco de backups anterior permanece intocado.
+
+LIMITACOES A HOMOLOGAR
+- Registros armazenados somente em memoria (sem gravacao via TM40/localStorage) ainda nao sao garantidos.
+- Registros individuais superiores a 4.4MB sao bloqueados com aviso; uploads grandes exigem estrategia propria de arquivos.
+- Nao foi feito teste REAL na conta Netlify, apenas testes locais/simulados.
+- Uma mesma chave editada em dois dispositivos ao mesmo tempo fica bloqueada ate revisao.
+- O projeto contem uma estrutura antiga de backup; mantenha copias externas.
+
+PROCEDIMENTO SEGURO
+1. Use uma branch/deploy preview (nao a main) ou um site Netlify separado de teste.
+2. Nao apague backups antigos nem dados salvos na V389.
+3. Certifique-se de que o build command e npm run build e que a funcao tm-data.mjs aparece no deploy.
+4. Entre com usuario de teste, grave teste online, atualize e consulte.
+5. Crie UM registro ficticio em cada ferramenta, feche a aba, reabra; confirme no segundo dispositivo.
+6. Teste edicao, exclusao e concorrencia antes de cadastrar dados escolares reais.
+
+OBSERVACAO: arquivos do programa (ZIP do GitHub) nao incluem seus dados posteriores. Exporte o Backup Completo dentro da Central como segunda protecao.

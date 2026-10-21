@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="noindex,nofollow" name="robots"/><title>Video Lessons Studio | Teacher Marks</title><link href="/academy.css" rel="stylesheet"/><style>
+:root{--ink:#153b4d;--cyan:#0e847a}body{background:#eff5f6}.studio{max-width:1250px;margin:20px auto;padding:0 15px 45px}.studio .panel{background:white;border:1px solid #d5e3e5;border-radius:19px;box-shadow:0 10px 30px #05223b0b;padding:22px;margin-bottom:15px}.studio h1{font-size:clamp(24px,4vw,37px);margin:0}.studio h2{font-size:20px;margin:0 0 13px}.studio p{line-height:1.5}.studio label{display:flex;flex-direction:column;gap:7px;font-size:13px;font-weight:750;color:#315b67}.studio input,.studio textarea,.studio select{border:1px solid #bfd4d8;border-radius:11px;padding:10px;background:#fff;color:#17384a;max-width:100%;width:100%;font:inherit}.studio textarea{min-height:105px}.studio input[type=range]{padding:4px}.studio input[type=checkbox]{width:auto}.studio button,.studio a.btn{cursor:pointer}.studio .flex{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.studio .editor-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(275px,1fr);gap:16px}.studio .fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.studio .muted{color:#66838c}.studio canvas{width:100%;background:#0b1b25;border-radius:15px;aspect-ratio:16/9;object-fit:contain;display:block}.studio .control{display:grid;gap:7px}.studio .status{padding:13px 16px;border-radius:12px;background:#eaf7f4;color:#146a61;min-height:44px}.studio .filebtn{border:2px dashed #a8cac6;padding:18px;border-radius:14px;background:#f6fbfa}.studio .video-row{display:flex;justify-content:space-between;align-items:center;gap:9px;padding:12px;border:1px solid #d8e7e9;border-radius:13px;margin:8px 0;flex-wrap:wrap}.studio video{display:none}.studio .hint{font-size:12px;line-height:1.5}.studio button:disabled{opacity:.45;cursor:not-allowed}
+.tm407-timeline-card{padding:18px;border:1px solid #d2e6e5;border-radius:16px;background:#f5fbfa;margin-bottom:23px}
+.tm407-clip-track{display:flex;gap:5px;min-height:94px;overflow-x:auto;padding:12px 4px;margin:15px 0;border:1px solid #cfdfdf;border-radius:12px;background:#e7f1f1}
+.tm407-clip{position:relative;min-width:112px;max-width:270px;flex:var(--clip-flex) 1 0px!important;border:2px solid #81bfba;border-radius:10px;padding:11px 8px;background:#e8f8f3;color:#15544d;display:flex;flex-direction:column;justify-content:center;text-align:left;gap:5px;font-size:12px;font-weight:850;cursor:pointer;user-select:none}
+.tm407-clip[aria-pressed="true"]{border-color:#085e61;background:#0d7a72;color:white;outline:2px solid #a7d6cb}
+.tm407-clip em{font-size:10px;font-style:normal;opacity:.85}.tm407-clip:focus-visible{outline:3px solid #e7b35b;outline-offset:3px}@media(max-width:850px){.studio .editor-grid{grid-template-columns:1fr}.studio .fields{grid-template-columns:1fr}}
+
+/* V408 — preview above the timeline, without changing storage or publication */
+.studio{max-width:1440px}
+.studio .tm408-preview-stage{display:grid;grid-template-columns:minmax(0,2.5fr) minmax(220px,1fr);gap:16px;align-items:stretch;margin:4px 0 14px}
+.studio .tm408-preview-core{min-width:0;background:#0f2430;border:1px solid #21495a;color:#f2fbfa;border-radius:16px;padding:20px}
+.studio .tm408-preview-core h2,.studio .tm408-preview-core label{color:#f1fbf8}
+.studio .tm408-preview-core .filebtn{background:#183748;border-color:#32766f;color:#e1f5f0;cursor:pointer;padding:10px 14px;margin-bottom:12px}
+.studio .tm408-preview-core canvas{max-height:430px;aspect-ratio:auto;object-fit:contain;background:#061219;border:1px solid #315362}
+.studio .tm408-preview-core .muted{color:#d2e6e4}
+.studio .tm408-preview-guide{border:1px solid #d7e8e7;border-radius:16px;padding:19px;background:linear-gradient(145deg,#edf9f6,#f9fcfd);color:#174558;line-height:1.6}
+.studio .tm408-preview-guide p{font-size:13px;margin:12px 0}
+.studio .tm408-preview-guide kbd{border:1px solid #afd3cc;border-bottom:3px solid #81ada3;border-radius:6px;padding:2px 7px;background:white;font-weight:800}
+.studio .tm408-tip{font-size:12px;color:#527580}
+.studio .tm407-timeline-card{background:#172a37;color:#edfafa;border-color:#264e57;margin-bottom:20px}
+.studio .tm407-timeline-card h2,.studio .tm407-timeline-card label{color:#effbfa}
+.studio .tm407-timeline-card .muted{color:#c5d9dc}
+.studio .tm407-timeline-card .tm407-clip-track{margin:0;border:1px solid #476576;background:#0c1c27;min-height:119px;gap:3px;padding:14px 12px;position:relative}
+.studio .tm407-timeline-card .tm407-clip{border-color:#266d76;background:linear-gradient(155deg,#175e64,#0e424f);color:#fff;min-width:105px;max-width:none;overflow:hidden;min-height:90px;text-shadow:0 1px 3px #001a29}
+.studio .tm407-timeline-card .tm407-clip[aria-pressed=true]{border:3px solid #f3c470;background-color:#117d71;outline:1px solid #e3ad57}
+.studio .tm407-clip-title{position:relative;z-index:1;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;background:#0b2839a8;padding:4px;border-radius:4px}
+.studio .tm407-clip em{position:relative;z-index:1;font-size:10px;background:#0b2839a8;border-radius:4px;padding:3px}
+.studio .tm407-clip-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.7;pointer-events:none}
+.studio .tm408-track-wrap{position:relative;overflow:hidden}
+.studio .tm408-playhead{position:absolute;z-index:5;top:3px;bottom:3px;width:2px;background:#ffcd68;box-shadow:0 0 5px #ffcd68;pointer-events:none;left:12px;display:none}
+.studio .tm408-playhead:before{content:'▼';position:absolute;top:-7px;left:-6px;color:#ffcd68;font-size:14px}
+.studio .tm408-ruler{display:flex;justify-content:space-between;gap:2px;padding:3px 12px;color:#b4ced0;font-size:11px;font-variant-numeric:tabular-nums}
+.studio .tm408-selection-status{font-size:12px;color:#c7e8dd;margin:9px 2px 15px}
+.studio .tm407-timeline-card .btn{background:#254655;color:white;border:1px solid #4b7078}
+.studio .tm407-timeline-card .btn:hover{background:#0a716b}
+.studio .tm407-timeline-card select,.studio .tm407-timeline-card input{background:#fff;color:#153b4d}
+@media(max-width:1000px){.studio .tm408-preview-stage{grid-template-columns:1fr}.studio .tm408-preview-guide{display:none}}
+@media(max-width:650px){.studio .tm408-preview-core{padding:10px}.studio .tm407-timeline-card{padding:10px}.studio .tm407-timeline-card .tm407-clip-track{overflow-x:auto}}
+
+/* V408.1 · Estúdio compacto; nenhum módulo da Central alterado */
+.studio{max-width:1300px;margin:12px auto;padding-bottom:24px}
+.studio .panel{padding:16px 20px;margin-bottom:12px}
+.studio .status{padding:9px 12px;min-height:0;font-size:13px}
+.studio .tm409-workspace{max-width:1120px;margin:0 auto}
+.studio .tm409-preview-block{background:#0f2430;color:#effaf9;border-radius:16px;padding:13px 18px;margin:0 auto 12px}
+.studio .tm409-bar,.studio .tm409-timeline-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.studio .tm409-bar h2,.studio .tm409-timeline-head h2{color:inherit;font-size:17px;margin:0}
+.studio .tm409-bar .btn,.studio .tm409-import{font-size:13px}
+.studio .tm409-import{display:inline-flex!important;cursor:pointer;flex-direction:row;align-items:center;width:auto!important;white-space:nowrap;font-weight:700!important}
+.studio .tm409-import input{display:none}
+.studio .tm409-canvas-wrap{display:flex;align-items:center;justify-content:center;min-height:210px;max-height:450px;margin:10px auto 8px;background:#06151d;border:1px solid #305463;border-radius:12px;overflow:hidden}
+.studio .tm409-canvas-wrap canvas{width:auto;max-width:100%;height:auto;max-height:440px;aspect-ratio:auto;object-fit:contain;border-radius:0}
+.studio .tm409-transport{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.studio .tm409-time{font-size:12px;color:#c8e4e2;font-variant-numeric:tabular-nums;white-space:nowrap}
+.studio label.tm409-seek{color:#e0f1ee;display:flex;flex:1 1 250px;gap:9px;align-items:center;font-size:11px}
+.studio label.tm409-seek input{flex:1}
+.studio .tm409-timeline-card{padding:13px 17px;margin-bottom:0}
+.studio .tm409-tools{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.studio .tm409-tools .btn{padding:7px 10px;line-height:1.1;white-space:nowrap;font-size:12px}
+.studio .tm409-tools kbd{font-family:inherit;border:1px solid #7c9a9e;background:#133340;border-radius:4px;padding:1px 3px}
+.studio .tm409-separator{width:1px;height:19px;background:#527b87;margin:0 2px}
+.studio .tm409-zoom-number{font-size:12px;color:#d0e9e7;min-width:40px;text-align:center}
+.studio .tm407-timeline-card .tm407-clip-track{min-height:95px;padding:10px;overflow-x:auto}
+.studio .tm407-timeline-card .tm407-clip{min-height:73px;max-width:none}
+.studio .tm408-selection-status{margin:8px 0 0;font-size:11px}
+.studio .tm409-inline-settings{margin-top:9px;border-top:1px solid #42606b;padding-top:8px}
+.studio .tm409-inline-settings summary{color:#d8f1ed;cursor:pointer;font-weight:750;font-size:13px}
+.studio .tm409-section-fields{margin-top:10px}
+.studio .tm409-accordions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 0}
+.studio .tm409-panel{border:1px solid #d5e6e6;background:white;border-radius:13px;overflow:hidden;align-self:start}
+.studio .tm409-panel summary{cursor:pointer;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:6px;padding:14px 15px;font-weight:800;font-size:14px;color:#184356}
+.studio .tm409-panel summary::-webkit-details-marker{display:none}
+.studio .tm409-panel[open] summary{background:#ebf7f4;border-bottom:1px solid #d5e6e6}
+.studio .tm409-panel .tm409-chevron{transition:transform .2s}
+.studio .tm409-panel[open] .tm409-chevron{transform:rotate(180deg)}
+.studio .tm409-pane-content{padding:14px;display:grid;gap:12px}
+.studio .tm409-check{flex-direction:row;align-items:center}
+.studio .tm409-link{margin:5px 0}
+.studio .tm409-preview-block button:focus-visible,.studio .tm409-panel summary:focus-visible,.studio .tm409-import:focus-visible{outline:3px solid #d9b674;outline-offset:3px}
+@media(max-width:750px){.studio .tm409-accordions{grid-template-columns:1fr}.studio .tm409-preview-block{padding:10px}.studio .tm409-canvas-wrap{min-height:130px}.studio .tm409-canvas-wrap canvas{max-height:300px}.studio .tm409-transport{gap:5px}.studio .tm409-tools .btn{padding:6px 8px}}
+
+/* V413 · seleção exclusiva e cursor ao clicar em qualquer faixa */
+.studio .tm409-canvas-wrap{min-height:290px;max-height:550px}
+.studio .tm409-canvas-wrap canvas{max-height:530px;max-width:100%}
+.studio .tm409-project-name{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:center;color:#c7e7e2;font-size:12px;margin:11px 0 1px}
+.studio .tm409-project-name strong{font-size:14px;color:white}
+.studio .tm409-project-name [data-state="saved"]{color:#9af0cb}
+.studio .tm409-project-name [data-state="error"]{color:#ffb7a8;font-weight:800}
+.studio .tm410-keyhelp{font-size:11px;color:#e1f4f0;white-space:nowrap}
+.studio .tm410-track-head{display:flex;gap:8px;align-items:center;justify-content:space-between;border-top:1px solid #456371;margin-top:12px;padding:8px 0;font-size:12px;font-weight:800;flex-wrap:wrap}
+.studio .tm410-track-head .btn{font-size:11px;padding:5px 8px}
+.studio .tm410-small-import{cursor:pointer}
+.studio .tm410-overlay-track{position:relative;display:flex;overflow-x:auto;align-items:center;gap:3px;min-height:43px;border:1px solid #456371;background:#0b1e2b;border-radius:9px;padding:4px 6px}
+.studio .tm410-overlay-track .tm410-track-pill{flex:0 0 auto;max-width:100%;border:1px solid #6ca9d8;color:#edfbfa;background:#14466b;border-radius:6px;padding:6px 10px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.studio .tm410-overlay-track .tm410-track-pill[aria-pressed="true"]{outline:2px solid #f5c66b;background:#0e6a8c}
+.studio #tm410CaptionTrack .tm410-track-pill{background:#695032;border-color:#cba569}
+.studio .tm410-track-help{color:#b6d6d3;font-size:10px;margin-top:7px}
+.studio .tm410-caption-editor{border:1px solid #bcd9db;background:#f2f9f8;border-radius:12px;padding:11px;display:grid;gap:9px}
+.studio .tm410-formatbar{display:flex;flex-wrap:wrap;gap:7px;align-items:end}
+.studio .tm410-formatbar label{flex:1 1 90px;font-size:12px}
+.studio .tm410-formatbar label.tm410-inline,.studio label.tm410-inline{display:inline-flex;flex:0 0 auto;align-items:center;flex-direction:row;border:1px solid #c2dad8;border-radius:7px;padding:7px;cursor:pointer}
+.studio .tm410-formatbar input[type=color]{width:55px;height:40px;padding:3px}
+.studio .tm410-project-dialog{border:1px solid #a7c9ce;border-radius:18px;width:min(720px,96vw);max-height:85vh;box-shadow:0 22px 80px #05222f80;color:#194255;padding:0}
+.studio .tm410-project-dialog::backdrop{background:#061d2cb0}
+.tm410-dialog-body{padding:22px;overflow:auto;max-height:80vh}
+.tm410-dialog-body h2{margin:0}
+.tm410-project-entry{border:1px solid #d7e5e7;border-radius:10px;padding:10px;margin:10px 0;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.tm410-project-entry small{display:block;color:#607880}
+.tm410-restore{cursor:pointer}
+@media(max-width:650px){.studio .tm409-canvas-wrap{min-height:180px}.studio .tm409-canvas-wrap canvas{max-height:340px}.studio .tm410-formatbar label{min-width:75px}}
+
+/* V410 · legendas visuais e edição flutuante; não altera componentes escolares */
+.studio .tm411-preview-drag{cursor:grab;touch-action:none}.studio .tm411-preview-drag:active{cursor:grabbing}
+.studio #tm410CaptionTrack{display:block;position:relative;min-height:48px;padding:4px;overflow:auto;touch-action:pan-x}
+.studio .tm411-caption-lane{position:relative;min-height:40px}
+.studio #tm410CaptionTrack .tm410-track-pill{position:absolute;display:flex;align-items:center;justify-content:center;margin:0!important;min-width:32px;max-width:none;width:auto;overflow:hidden;cursor:grab;touch-action:none;text-align:center;white-space:nowrap}
+.studio #tm410CaptionTrack .tm410-track-pill.dragging{cursor:grabbing;background:#9d6d34;border-color:#ffe09a}
+.studio #tm410CaptionTrack .tm410-track-pill:hover{filter:brightness(1.18)}
+.studio .tm411-floating{position:fixed;z-index:9999;left:calc(50vw - 245px);top:14vh;width:min(490px,94vw);max-height:80vh;overflow:auto;background:#f6fbfa;box-shadow:0 23px 75px #03162188;border:2px solid #5eaaa4;border-radius:16px;padding:12px;display:grid;gap:10px}
+.studio .tm411-floating[hidden]{display:none!important}
+.studio .tm411-float-grip{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#183c4c;color:white;border-radius:9px;padding:10px;cursor:move;touch-action:none;user-select:none;font-weight:750}
+.studio .tm411-float-grip .btn{background:white!important;color:#113b49!important;font-size:11px}
+.studio .tm411-floating textarea{min-height:70px}
+.studio .tm411-presets-dialog{position:fixed;top:14vh;right:3vw;left:auto;margin:0;z-index:9998;box-shadow:0 20px 80px #001d3155}
+.studio .tm411-preset-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}
+.studio .tm411-preset{border:1px solid #abc6c8;background:#102c39;color:white;min-height:88px;border-radius:11px;display:flex;align-items:center;justify-content:center;padding:13px;text-align:center;font-size:15px;cursor:grab;user-select:none;flex-direction:column}
+.studio .tm411-preset:focus-visible{outline:3px solid #eebf74}
+.studio .tm411-preset small{display:block;font-size:10px;opacity:.85;margin-top:7px}
+@media(max-width:600px){.studio .tm411-floating{left:3vw;top:6vh;width:94vw}.studio .tm411-preset-grid{grid-template-columns:1fr}}
+
+.studio .tm411-active-track{margin:6px 0 3px;color:#b9f4df;font-size:12px;font-weight:800}
+.studio #tm410AudioTrack,.studio #tm410CaptionTrack{display:block;position:relative;overflow-x:auto;min-height:45px;touch-action:pan-x}
+.studio .tm411-track-lane{position:relative;min-height:42px}
+.studio .tm411-editable-block{position:absolute!important;display:flex;align-items:center;justify-content:center;min-width:25px!important;max-width:none!important;width:auto;cursor:grab;touch-action:none;padding:4px 11px!important;box-sizing:border-box;white-space:nowrap;overflow:hidden;border-radius:6px}
+.studio .tm411-editable-block.dragging{cursor:grabbing;filter:brightness(1.2)}
+.studio .tm411-editable-block .tm411-block-label{overflow:hidden;white-space:nowrap;text-overflow:ellipsis;pointer-events:none;max-width:100%}
+.studio .tm411-editable-block .tm411-resize{position:absolute;top:0;bottom:0;width:8px;background:#e0f2ec55;border:1px solid #c8eeec99;cursor:ew-resize;z-index:2;touch-action:none}
+.studio .tm411-editable-block .tm411-resize-left{left:0;border-radius:4px 0 0 4px}
+.studio .tm411-editable-block .tm411-resize-right{right:0;border-radius:0 4px 4px 0}
+.studio #tm410AudioTrack .tm411-editable-block{background:#124d74;color:white;border:1px solid #73b6ed}
+.studio #tm410CaptionTrack .tm411-editable-block{background:#6b502c;color:white;border:1px solid #dfb674}
+.studio .tm411-editable-block[aria-pressed="true"]{outline:2px solid #f4da78;background:#0d8195!important}
+
+.studio .tm407-clip{position:relative}
+.studio .tm411-video-edge{position:absolute;top:0;bottom:0;width:10px;z-index:3;background:#bcf8eb77;cursor:ew-resize;touch-action:none}
+.studio .tm411-video-left{left:0;border-radius:8px 0 0 8px}
+.studio .tm411-video-right{right:0;border-radius:0 8px 8px 0}
+.studio .tm407-clip.dragging{outline:3px solid #f1ca70}
+
+/* V413: presets richer, compact export controls */
+.tm411-preset-grid {grid-template-columns:repeat(auto-fill,minmax(155px,1fr));max-height:56vh;overflow-y:auto;}
+.tm411-preset {min-height:80px;line-height:1.25;padding:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;text-align:center;}
+.tm411-preset small {display:block;font-size:11px;opacity:.85;}
+.tm413-export-format {display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;}
+.tm413-export-format select {padding:10px;border:1px solid #bed6d8;border-radius:9px;}
+
+
+/* V414 – destaque cirúrgico nas três faixas e exportação visualmente discreta */
+.studio .tm414-hover-guide{position:absolute;top:0;bottom:0;width:2px;background:#ffd24f;box-shadow:0 0 0 1px #5e3e09,0 0 12px #ffd24f;pointer-events:none;z-index:15;display:none}
+.studio .tm414-hover-guide:before{content:"";position:absolute;top:0;left:-4px;border-left:5px solid transparent;border-right:5px solid transparent;border-top:8px solid #ffdd63}
+.studio .tm411-editable-block{cursor:crosshair!important}
+.studio .tm411-editable-block.dragging{cursor:grabbing!important}
+.studio .tm411-resize{cursor:ew-resize!important}
+.studio .tm409-canvas-wrap{position:relative}
+.studio .tm414-export-overlay:not([hidden]){position:absolute;inset:0;display:flex;justify-content:center;align-items:center;overflow:hidden;background:#081923;z-index:25;border-radius:12px}
+.studio .tm414-export-overlay img{position:absolute;width:100%;height:100%;object-fit:contain;opacity:.55}
+.studio .tm414-export-progress{z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;padding:25px;text-align:center;max-width:500px;background:#0e2c3ded;color:#fff;border:1px solid #6bb0ae;border-radius:14px}
+.studio .tm414-export-progress strong{font-size:19px}.studio .tm414-export-progress small{font-size:12px;color:#c9dadd}
+.studio .tm414-progressbar{width:min(100%,360px);height:10px;border-radius:20px;background:#46616e;overflow:hidden}
+.studio .tm414-progressbar span{display:block;width:0;height:100%;background:#34d3c0;transition:width .4s}
+.studio .tm414-save-note{font-size:11px;color:#54727c;margin:3px 0 9px}
+</style></head><body><header class="topbar"><div class="inner"><a class="brand" href="/index.html"><span class="mark">M</span><span>TEACHER MARKS <small>VIDEO LESSONS STUDIO · V414</small></span></a><div class="nav-links"><a href="/index.html">Central do professor</a><a href="/admin.html">Gestão da Academia</a><a href="/aluno.html">Portal do aluno</a></div></div></header>
+<main class="studio">
+<section class="panel"><div class="flex" style="justify-content:space-between"><div><h1>🎬 Video Lessons Studio</h1><p class="muted">Edite sua videoaula diretamente no navegador. Vídeo acima, timeline abaixo e ferramentas organizadas em menus.</p></div><span class="pill" id="studioAccess">Verificando administrador…</span></div><p class="status" id="studioStatus" role="status">Iniciando…</p></section>
+<section class="panel" id="studioMain">
+<section aria-label="Editor de videoaulas" class="tm409-workspace">
+<section aria-label="Prévia do vídeo" class="tm409-preview-block">
+<div class="tm409-bar"><h2>🎞 Pré-visualização</h2>
+<div class="flex">
+<label class="tm409-import btn" for="tm407AddVideos">＋ Importar vídeos
+          <input accept="video/*" hidden="" id="tm407AddVideos" multiple="" type="file"/>
+</label>
+<button class="btn" id="tm409NewProject" type="button">＋ Novo</button>
+<button class="btn" id="tm410SaveAs" type="button">💾 Salvar como…</button>
+<button class="btn" id="tm410Projects" type="button">📁 Meus projetos</button>
+<button class="btn" id="tm414SaveFile" type="button" title="Salva o projeto com os arquivos no seu computador, mesmo se o armazenamento local estiver cheio">💾 Salvar arquivo .tmvideo</button>
+</div>
+</div>
+<video crossorigin="anonymous" id="studioSource" playsinline="" preload="metadata"></video>
+<div class="tm409-project-name"><strong id="tm410ProjectName">Projeto sem nome</strong><span aria-live="polite" id="tm410SaveIndicator">Pronto para editar</span></div><div class="tm414-save-note">O salvamento automático usa este navegador. Cada <strong>Permalink</strong> tem um armazenamento próprio. Use <strong>Salvar arquivo .tmvideo</strong> para guardar uma cópia e abrir em outra versão.</div>
+<div class="tm409-canvas-wrap" id="tm414PreviewWrap"><canvas aria-label="Pré-visualização da videoaula editada" height="720" id="studioCanvas" role="img" width="1280"></canvas><div class="tm414-export-overlay" id="tm414ExportOverlay" hidden><img id="tm414ExportStill" alt="Quadro da videoaula antes da exportação"><div class="tm414-export-progress"><strong>🎞 Processando e salvando a videoaula…</strong><span id="tm414ExportProgress">Preparando…</span><div class="tm414-progressbar"><span id="tm414ExportProgressBar"></span></div><small>O editor processa os quadros internamente sem reproduzi-los na pré-visualização. Mantenha a aba aberta.</small></div></div></div>
+<div class="tm409-transport">
+<button class="btn" id="studioPlay" type="button">▶ Reproduzir</button>
+<button class="btn" id="studioPause" type="button">⏸ Pausar</button>
+<span class="tm409-time" id="timeStamp">00:00 / 00:00</span>
+<label aria-label="Posição no vídeo" class="tm409-seek">Posição <input id="seek" max="1" min="0" step="0.1" type="range" value="0"/></label>
+</div>
+</section>
+<section aria-label="Linha do tempo" class="tm407-timeline-card tm409-timeline-card">
+<div class="tm409-timeline-head"><h2>✂ Timeline</h2><span class="muted small" id="tm407Total">00:00 de vídeo</span></div>
+<div class="tm409-tools">
+<button class="btn" id="tm409Undo" title="Desfazer · Ctrl+Z" type="button">↶ Desfazer</button>
+<button class="btn" id="tm409Redo" title="Refazer · Ctrl+Shift+Z" type="button">↷ Refazer</button>
+<span aria-hidden="true" class="tm409-separator"></span>
+<button class="btn" id="tm407Split" title="Dividir item selecionado no cursor · S" type="button">✂ Cortar <kbd>S</kbd></button>
+<button class="btn" id="tm411MuteVideo" type="button" title="Silenciar ou reativar o áudio original deste trecho">🔊 Som do trecho</button>
+<button class="btn" id="tm411MuteAllVideo" type="button" title="Silenciar todos os áudios originais dos vídeos">🎬 Som dos vídeos: ativo</button>
+<button class="btn" id="tm407Remove" title="Excluir vídeo, áudio ou legenda selecionada · Delete" type="button">🗑 Excluir</button>
+<button class="btn" id="tm407Left" title="Mover trecho selecionado para a esquerda" type="button">←</button>
+<button class="btn" id="tm407Right" title="Mover trecho selecionado para a direita" type="button">→</button>
+<span aria-hidden="true" class="tm409-separator"></span>
+<button class="btn" id="tm409ZoomOut" title="Afastar timeline" type="button">−</button>
+<span class="tm409-zoom-number" id="tm409ZoomValue">100%</span>
+<button class="btn" id="tm409ZoomIn" title="Aproximar timeline" type="button">＋</button>
+<span class="tm409-separator"></span><span class="tm410-keyhelp">Espaço: ▶ / ⏸</span>
+</div>
+<div aria-hidden="true" class="tm408-ruler" id="tm408Ruler"></div>
+<div class="tm408-track-wrap"><div aria-label="Trechos de vídeo" class="tm407-clip-track" id="tm407Clips" role="list"></div><div aria-hidden="true" class="tm408-playhead" id="tm408Playhead"></div></div>
+<div class="tm408-selection-status" id="tm408Selection">Importe um vídeo e selecione um trecho para editar.</div><div class="tm411-active-track" id="tm411ActiveTrack" aria-live="polite">Selecionado: 🎞 Vídeo</div>
+<div class="tm410-track-head"><span>🎧 Faixa de áudio complementar</span><div class="flex"><label class="tm410-small-import btn" for="tm410AudioFiles">＋ Adicionar áudio<input type="file" id="tm410AudioFiles" accept="audio/*" multiple hidden></label><button type="button" class="btn" id="tm410ToggleAudio">🔊 Áudio ativo</button></div></div>
+<div id="tm410AudioTrack" class="tm410-overlay-track" aria-label="Faixa de áudio complementar"></div>
+<div class="tm410-track-head"><span>📝 Faixa de legendas</span><div class="flex"><button class="btn" id="tm411Presets" type="button">▦ Modelos de legenda</button><button class="btn" type="button" id="tm410AddCaption">＋ Legenda no cursor</button></div></div>
+<div id="tm410CaptionTrack" class="tm410-overlay-track" aria-label="Faixa de legendas editáveis"></div>
+<div class="tm410-track-help">Clique em um vídeo, áudio ou legenda para selecioná-lo sozinho e levar o cursor até o ponto clicado. Arraste áudios e legendas para movê-los; segure nas bordas para ajustar duração. Cortar, Excluir e Mover afetam somente a seleção ativa. Dê duplo clique para abrir a formatação. Arraste a legenda na prévia para posicioná-la no vídeo. Use ← e → para mover o cursor (Shift: 1s).</div>
+<details class="tm409-inline-settings"><summary>🔊 Volume e transições</summary>
+<div class="fields tm409-section-fields"><label><span id="tm411VolumeLabel">Volume do vídeo</span> · <span id="tm407VolumeText">100%</span><input id="tm407Volume" max="200" min="0" step="5" type="range" value="100"/></label>
+<label>Transição entre trechos <select id="tm407Transition"><option value="none">Corte direto (sem efeito)</option><option value="fade">Fade escuro</option><option value="fadeWhite">Fade branco</option><option value="flash">Flash luminoso</option><option value="slideLeft">Deslizar para esquerda</option><option value="slideRight">Deslizar para direita</option><option value="wipeLeft">Revelação lateral ←</option><option value="wipeRight">Revelação lateral →</option><option value="zoomIn">Zoom de entrada</option><option value="zoomOut">Zoom de saída</option><option value="blur">Desfoque suave</option><option value="circle">Círculo (íris)</option><option value="grayscale">Preto e branco</option><option value="sepia">Sépia</option><option value="dipBlue">Azul cinematográfico</option></select></label>
+</div></details>
+</section>
+</section>
+<section aria-label="Painéis de edição" class="tm409-accordions">
+<details class="tm409-panel"><summary>⚙ Ajustes de vídeo e cortes <span class="tm409-chevron">⌄</span></summary>
+<div class="tm409-pane-content">
+<div class="fields"><label>Início do trecho (segundos)<input id="trimStart" min="0" step="0.1" type="number" value="0"/></label><label>Fim do trecho (segundos)<input id="trimEnd" min="0" step="0.1" type="number" value="0"/></label></div>
+<div class="fields"><label>Formato <select id="ratio"><option value="16:9">Horizontal 16:9</option><option value="9:16">Vertical 9:16</option><option value="1:1">Quadrado 1:1</option></select></label>
+<label>Enquadramento <select id="fit"><option value="contain">Mostrar vídeo inteiro</option><option value="cover">Preencher enquadramento (cortar bordas)</option></select></label>
+<label>Luminosidade<input id="bright" max="160" min="60" type="range" value="100"/></label><label>Contraste<input id="contrast" max="160" min="70" type="range" value="100"/></label></div>
+</div></details>
+<details class="tm409-panel"><summary>✏ Títulos, legendas e texto <span class="tm409-chevron">⌄</span></summary>
+<div class="tm409-pane-content"><div class="control">
+<div class="tm410-caption-editor"><strong>📝 Legenda selecionada na timeline</strong>
+<label>Texto da legenda<textarea id="tm410CaptionText" rows="2" placeholder="Clique em + Legenda no cursor e digite o texto"></textarea></label>
+<div class="fields"><label>Começa (s)<input id="tm410CaptionFrom" type="number" min="0" step="0.1" value="0"></label><label>Termina (s)<input id="tm410CaptionTo" type="number" min="0" step="0.1" value="3"></label></div>
+<div class="tm410-formatbar"><label>Fonte<select id="tm410Font"><option value="Arial">Arial</option><option value="Verdana">Verdana</option><option value="Georgia">Georgia</option><option value="Trebuchet MS">Trebuchet</option><option value="Tahoma">Tahoma</option><option value="Courier New">Monoespaçada</option><option value="Times New Roman">Times New Roman</option></select></label><label>Tamanho<input id="tm410FontSize" type="number" min="16" max="110" value="36"></label><label>Cor<input id="tm410TextColor" type="color" value="#ffffff"></label><label>Fundo<input id="tm410BgColor" type="color" value="#0a2532"></label></div>
+<div class="tm410-formatbar"><label class="tm410-inline"><input type="checkbox" id="tm410Bold"> <b>N</b></label><label class="tm410-inline"><input type="checkbox" id="tm410Italic"> <i>I</i></label><label class="tm410-inline"><input type="checkbox" id="tm410Underline"> <u>S</u></label><label>Alinhamento<select id="tm410Align"><option value="center">Centro</option><option value="left">Esquerda</option><option value="right">Direita</option><option value="justify">Justificado</option></select></label><label>Espaçamento<input id="tm410LineHeight" type="number" min="1" max="2.5" step="0.1" value="1.3"></label></div>
+<button class="btn" type="button" id="tm410DeleteCaption">Excluir legenda selecionada</button>
+</div>
+<label>Título que aparece no vídeo<input id="titleOverlay" maxlength="120" placeholder="Ex.: Simple Present — Aula 01"/></label>
+<label>Legenda manual no vídeo<textarea id="captionOverlay" placeholder="Digite uma legenda para aparecer sobre o vídeo" rows="3"></textarea></label>
+<div class="fields"><label>Legenda começa (s)<input id="captionStart" min="0" step="0.1" type="number" value="0"/></label><label>Legenda termina (s)<input id="captionEnd" min="0" step="0.1" type="number" value="0"/></label></div>
+<label class="tm409-check"><input checked="" id="showTitle" type="checkbox"/> Exibir título nos primeiros cinco segundos</label>
+</div></div></details>
+<details class="tm409-panel"><summary>🎧 Ajustar faixa de áudio <span class="tm409-chevron">⌄</span></summary>
+<div class="tm409-pane-content"><div class="fields"><label>Início na timeline (s)<input id="tm410AudioStart" type="number" min="0" step="0.1" value="0"></label><label>Volume da faixa (%)<input id="tm410AudioVolume" type="range" min="0" max="200" step="5" value="100"></label></div>
+<div class="flex"><label class="tm410-inline"><input id="tm410AudioMute" type="checkbox"> Silenciar este áudio</label><button id="tm410DeleteAudio" class="btn" type="button">Excluir áudio selecionado</button></div>
+<div class="fields"><label>Fade-in (segundos)<input id="tm411FadeIn" type="number" min="0" max="60" step="0.1" value="0"></label><label>Fade-out (segundos)<input id="tm411FadeOut" type="number" min="0" max="60" step="0.1" value="0"></label></div><small class="muted" id="tm411AudioRange">Selecione um áudio na timeline para editar.</small><small class="muted">Arraste o centro do áudio para movê-lo. Arraste suas bordas para aparar o início ou o fim; use S para dividir no cursor. Fades e volume também saem no vídeo exportado.</small></div></details>
+<details class="tm409-panel"><summary>📘 Conteúdo pedagógico da videoaula <span class="tm409-chevron">⌄</span></summary>
+<div class="tm409-pane-content control"><label>Título da videoaula<input id="videoTitle" maxlength="130" placeholder="Ex.: O uso de DO e DOES" required=""/></label>
+<label>Vincular ao curso<select id="videoLesson"><option value="">Videoaula complementar</option></select></label>
+<label>Explicação escrita para o aluno<textarea id="videoDescription" maxlength="12000" placeholder="Orientações, exemplos, exercícios de apoio…" rows="6"></textarea></label>
+</div></details>
+<details class="tm409-panel"><summary>☁ Exportar e publicar <span class="tm409-chevron">⌄</span></summary>
+<div class="tm409-pane-content">
+<p class="muted small">Ao exportar, escolha onde salvar o vídeo. O processamento ocorre em segundo plano visual, sem exibir a reprodução. Por limitações do navegador, o arquivo ainda precisa ser renderizado ao longo do tempo. Se o Chrome não permitir escolher a pasta, ative “Perguntar onde salvar cada arquivo” em Downloads. Envie arquivos até 96 MB para a Academia.</p>
+<div class="flex"><label class="tm413-export-format">Formato <select id="studioExportFormat"><option value="mp4">MP4 (preferencial)</option><option value="webm">WebM (alternativo)</option></select></label><button class="btn primary" id="studioExport" type="button">💾 Exportar e escolher onde salvar</button>
+<a class="btn" download="teacher-marks-videoaula.mp4" hidden="" id="studioDownload">⬇ Baixar vídeo editado</a>
+<button class="btn primary" id="studioUpload" type="button">☁ Enviar vídeo para a Academia (até 96 MB)</button></div>
+<div class="flex tm409-link"><input id="studioExternal" placeholder="Link YouTube/Vimeo" style="flex:1;min-width:220px" type="url"/><button class="btn" id="studioLink" type="button">Vincular link</button></div>
+<label class="tm409-check"><input checked="" id="studioPublish" type="checkbox"/> Publicar para estudantes com acesso válido</label>
+<p class="status" id="studioSaveStatus" role="status">Nenhum vídeo publicado nesta sessão.</p>
+</div></details>
+</section>
+</section><section class="panel" hidden="" id="studioCloudAuth"><h2>☁ Conectar para publicar ou gerenciar videoaulas</h2><p class="muted">Você pode importar, editar e exportar vídeos sem fazer login aqui. Somente publicar, atualizar o catálogo e excluir vídeos da Academia exigem sua conta administrativa.</p><form class="flex" id="studioSignInForm"><label>E-mail da Academia <input autocomplete="username" id="studioAdminEmail" required="" type="email"/></label><label>Senha da Academia <input autocomplete="current-password" id="studioAdminPassword" required="" type="password"/></label><button class="btn primary" type="submit">Entrar para publicar</button><button class="btn" id="studioUseSession" type="button">Usar conta já conectada</button></form><p class="muted small" id="studioAuthMessage" role="status"></p></section>
+<section class="panel" hidden="" id="studioLibrary"><div class="flex" style="justify-content:space-between"><h2>📚 Videoaulas cadastradas</h2><button class="btn small" id="reloadVideos" type="button">↻ Atualizar</button></div><div id="studioList"></div></section>
+<dialog id="tm411PresetDialog" class="tm410-project-dialog tm411-presets-dialog"><div class="tm410-dialog-body"><div class="flex" style="justify-content:space-between"><h2>▦ Modelos de legenda</h2><button class="btn" type="button" id="tm411ClosePresets">✕ Fechar</button></div><p class="muted small">Clique em um modelo para colocá-lo no cursor ou arraste o modelo para a faixa de legendas.</p><div id="tm411PresetGrid" class="tm411-preset-grid"></div></div></dialog>
+<dialog id="tm410ProjectDialog" class="tm410-project-dialog"><form method="dialog" class="tm410-dialog-body"><div class="flex" style="justify-content:space-between"><h2>📁 Projetos salvos neste navegador</h2><button class="btn" value="close" aria-label="Fechar">✕ Fechar</button></div><p class="muted small">Projetos e mídias são armazenados no Chromebook ou celular deste navegador, não na conta Netlify. Faça também backup do projeto para outro aparelho.</p><div id="tm410ProjectsList"></div><div class="flex"><button class="btn" id="tm410ExportProject" type="button">⬇ Backup do projeto</button><label class="btn tm410-restore">⬆ Restaurar backup<input type="file" id="tm410ImportProject" accept=".tmvideo" hidden></label></div><p id="tm410ProjectDialogStatus" class="muted small"></p></form></dialog>
+</main><script defer="" src="/tm-identity-browser.js"></script><script defer="" src="/video-studio.js?v=4140"></script></body></html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Cache-Control" content="no-store">
+<title>Ativar conta · Teacher Marks</title>
+<style>
+:root{font-family:system-ui,-apple-system,'Segoe UI',Arial,sans-serif;color-scheme:light;color:#183e4b;background:#102b3f}
+*{box-sizing:border-box}body{min-height:100dvh;margin:0;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 85% 15%,#177c75 0%,#153f50 44%,#102b3f 100%)}
+main{width:min(480px,100%);background:#fff;padding:clamp(22px,4vw,34px);border-radius:24px;box-shadow:0 22px 80px #0005}
+.brand{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.17em;color:#078077}
+h1{font-size:25px;line-height:1.2;margin:13px 0 10px}p{line-height:1.6;color:#587180;font-size:14px}form{display:grid;gap:13px;margin-top:20px}label{display:grid;gap:6px;font-size:13px;font-weight:800}input{width:100%;font:inherit;border:1px solid #c5d7dc;border-radius:12px;min-height:47px;padding:10px 12px}input:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #e6b74d;outline-offset:3px}button,.link{background:#0c7b70;color:#fff;text-decoration:none;border:0;border-radius:11px;font-size:14px;font-weight:850;padding:13px 16px;min-height:46px;text-align:center;cursor:pointer}button:disabled{opacity:.65;cursor:wait}.link{display:inline-block;margin-top:10px}#status{padding:12px;border-radius:12px;background:#f0f7f6;color:#315f60;font-size:13px;margin-top:16px;line-height:1.6;overflow-wrap:anywhere}#status.error{background:#fff1ee;color:#982f2e}#status.ok{background:#eaf8f1;color:#11634c}small{display:block;margin-top:19px;color:#6a7e86;line-height:1.5} [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main>
+  <div class="brand">Teacher Marks · Acesso seguro</div>
+  <h1 id="title">Ativação da conta</h1>
+  <p id="message">Aguarde enquanto confirmamos seu link de acesso com o Netlify Identity.</p>
+  <form id="passwordForm" hidden>
+    <label>Nova senha da conta online<input id="pass1" type="password" minlength="8" autocomplete="new-password" required placeholder="No mínimo 8 caracteres"></label>
+    <label>Confirme a nova senha<input id="pass2" type="password" minlength="8" autocomplete="new-password" required placeholder="Repita a senha"></label>
+    <button id="activate" type="submit">Criar senha e ativar conta</button>
+  </form>
+  <div id="status" role="status" aria-live="polite">Validando convite…</div>
+  <a id="continue" href="/admin.html" class="link" hidden>Ir para Gestão da Academia</a>
+  <small>Esta senha é da conta online do Netlify Identity. Ela não é o código local de entrada da Central. Nunca compartilhe seu link de convite nem sua senha.</small>
+</main>
+<script src="/tm-identity-browser.js"></script>
+<script>
+(()=>{'use strict';
+ const $=id=>document.getElementById(id);
+ const form=$('passwordForm'), status=$('status'), title=$('title'), msg=$('message'), action=$('activate');
+ let flow=null, working=false;
+ const params=new URLSearchParams(String(location.hash||'').replace(/^#/,''));
+ const kinds=[['invite','invite_token'],['recovery','recovery_token'],['confirmation','confirmation_token'],['email_change','email_change_token']];
+ const entry=kinds.find(([type,key])=>params.has(key));
+ const fallback=entry?{type:entry[0],token:params.get(entry[1])}:null;
+ function display(message,state=''){status.textContent=message;status.className=state}
+ function normalize(value){const raw=String(value||'').toLowerCase().replace(/[- ]/g,'_');if(raw.includes('invite'))return 'invite';if(raw.includes('recovery'))return 'recovery';if(raw.includes('confirmation'))return 'confirmation';if(raw.includes('email_change'))return 'email_change';return raw}
+ function stripSecret(){try{history.replaceState(null,'',location.pathname+location.search)}catch(_){}}
+ async function start(){
+  if(!fallback){title.textContent='Link de ativação não encontrado';msg.textContent='Abra novamente o botão “Accept the invite” no e-mail do Netlify.';display('Nenhum token de convite ou recuperação foi recebido.','error');return}
+  const sdk=window.TMNetlifyIdentity;
+  if(!sdk||typeof sdk.handleAuthCallback!=='function'){
+   title.textContent='Serviço de autenticação indisponível';msg.textContent='A Central não conseguiu carregar o componente de autenticação do Netlify.';
+   display('Verifique se tm-identity-browser.js foi publicado no mesmo site.','error');return;
+  }
+  try{
+   display('Confirmando a validade do link com o Netlify…');
+   const result=await sdk.handleAuthCallback();
+   if(!result)throw new Error('O convite não foi validado. Ele pode estar expirado ou já ter sido utilizado.');
+   flow={type:normalize(result.type||fallback.type),token:result.token||fallback.token};
+   stripSecret();
+   if(flow.type==='invite'||flow.type==='recovery'){
+    title.textContent=flow.type==='invite'?'Criar senha da conta':'Redefinir senha da conta';
+    msg.textContent='O link foi recebido. Informe e confirme a senha para terminar a ativação da sua conta.';
+    action.textContent=flow.type==='invite'?'Criar senha e ativar conta':'Salvar nova senha';
+    form.hidden=false;display('Link processado. Conclua o cadastro abaixo.');
+    $('pass1').focus();
+   }else{
+    title.textContent='E-mail confirmado';msg.textContent='A confirmação foi processada pelo Netlify.';
+    display('Você já pode continuar para a Gestão da Academia.','ok');$('continue').hidden=false;
+   }
+  }catch(e){
+   title.textContent='Não foi possível confirmar o convite';msg.textContent='Não foi possível concluir a verificação deste link.';
+   display(String(e?.message||e)+'. Se necessário, solicite um novo convite no Netlify Identity.','error');
+  }
+ }
+ form.addEventListener('submit',async e=>{
+  e.preventDefault();if(!flow||working)return;
+  const p1=$('pass1').value,p2=$('pass2').value;
+  if(p1.length<8){display('Use pelo menos 8 caracteres.','error');return}
+  if(p1!==p2){display('As duas senhas precisam ser iguais.','error');return}
+  const sdk=window.TMNetlifyIdentity;
+  working=true;action.disabled=true;
+  try{
+   display('Gravando sua senha de forma segura…');
+   if(flow.type==='invite'){
+    if(!flow.token||typeof sdk.acceptInvite!=='function')throw new Error('Serviço de ativação indisponível.');
+    await sdk.acceptInvite(flow.token,p1);
+   }else if(flow.type==='recovery'){
+    if(typeof sdk.updateUser!=='function')throw new Error('Serviço de atualização de senha indisponível.');
+    await sdk.updateUser({password:p1});
+   }
+   form.hidden=true;$('pass1').value='';$('pass2').value='';
+   title.textContent='Conta ativada!';msg.textContent='Sua nova senha foi cadastrada. Agora você pode entrar na Gestão da Academia.';
+   display('Ativação concluída. Entre com o e-mail cadastrado e a senha que acabou de criar.','ok');
+   $('continue').hidden=false;flow=null;
+  }catch(err){display('Não foi possível salvar a senha: '+String(err?.message||err),'error')}
+  finally{working=false;action.disabled=false}
+ });
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+})();
+</script>
+</body>
+</html>

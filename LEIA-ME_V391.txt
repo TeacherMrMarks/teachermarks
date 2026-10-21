@@ -1,0 +1,35 @@
+TEACHER MARKS V391 — PACOTE DE HOMOLOGAÇÃO / NÃO PUBLICAR COMO PRODUÇÃO AINDA
+
+1. PROJETO COMPLETO
+- index.html: Central completa herdada da V390
+- aluno.html: novo portal English Academy com 50 aulas
+- admin.html: painel do curso (alunos, convites, preços, Pix e confirmação manual)
+- netlify/functions/tm-academy.mjs: API de convites, sessão, aula, progresso, pedidos e aprovação manual
+- netlify/functions/tm-academy-course.mjs: 50 aulas protegidas no backend
+- netlify/functions/tm-data.mjs: camada piloto de armazenamento da Central V390
+- build.mjs, netlify.toml, package.json: configuração de publicação no Netlify
+
+2. SEGURANÇA E CADASTROS
+- Configurar TM_ADMIN_EMAIL como variável de ambiente, com o e-mail da conta administrativa.
+- Validar no Netlify o cadastro, confirmação de e-mail e autenticação usando Identity.
+- A sessão de aluno tem limite de inatividade de 24 horas no backend.
+- Nunca divulgar a senha administrativa nem o endereço de uma conta para testes públicos.
+
+3. PAGAMENTOS
+- Pix está DESABILITADO inicialmente; deve ser ativado no painel só depois de testar QR real e consultar o banco.
+- O painel gera pedidos; a aprovação é MANUAL, após verificar o extrato bancário.
+- Um comprovante isolado nunca significa pagamento aprovado.
+- Os valores mensal e anual podem ser modificados, mas preços de pedidos já feitos ficam preservados.
+- Não há débito ou renovação automática pelo Pix nessa versão.
+
+4. LIMITES — AINDA EM HOMOLOGAÇÃO
+- As ferramentas legadas da Central precisam de testes individuais de persistência no Netlify.
+- A autenticação de aluno e o acesso em outros aparelhos precisam de teste de ponta a ponta no Netlify real.
+- Dependências do projeto precisam instalar e compilar com npm run build no Netlify. A compilação não pôde ser concluída neste ambiente por indisponibilidade de instalação.
+- Validar proteção de conteúdos, concorrência, convites expirados, preço, Pix, revogação de acesso e recuperação de senha antes de liberar alunos.
+- A prévia HTML é demonstração local: NUNCA processa dados reais ou pagamentos.
+
+5. PUBLICAÇÃO SEGURA
+- Criar projeto Netlify de testes SEPARADO da V389.
+- Fazer deploy somente após os testes e com os pagamentos DESATIVADOS.
+- Não inserir dados reais de alunos antes de validar LGPD, consentimentos e controle de acesso.

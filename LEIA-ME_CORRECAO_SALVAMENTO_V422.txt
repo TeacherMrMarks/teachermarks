@@ -1,0 +1,11 @@
+TEACHER MARKS PROFESSIONAL — V422 (correção pontual de detecção de salvamento)
+
+Base: ZIP original teacher-marks-professional-main(2).zip.
+Alteração: exclusivamente no script tm390-data-client do index.html.
+A varredura segura dos registros localStorage/IndexedDB, que antes rodava somente no primeiro acesso, agora repete a cada 90 segundos enquanto a conta online estiver ativa.
+Mantidos: layout, ferramentas, login, controle CAS/ETag, bloqueio de conflitos e funções Netlify.
+
+ATENÇÃO: não garante armazenamento 100% online; algumas chaves são deliberadamente excluídas, registros >4,4 MB não cabem no endpoint e os 13 conflitos preexistentes NÃO foram resolvidos. Não remova os backups locais.
+
+VALIDAÇÃO exigida antes de uso como versão principal: testar uma alteração por ferramenta, aguardar confirmação do Netlify, consultar o mesmo registro em outro navegador e comparar o conteúdo.
+Faça backup completo e dos registros em conflito antes de qualquer publicação.

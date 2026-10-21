@@ -1,0 +1,10 @@
+TEACHER MARKS CENTRAL V389 — LOGIN PERSISTENTE NO SAFARI (TESTE)
+
+Arquivos alterados: index.html e tm-identity-entry.js, ambos na raiz do GitHub.
+O index.html usa o SDK no navegador para login/logout e só trata o usuário como autenticado se o servidor confirmar.
+O arquivo tm-identity-entry.js precisa ser RECOMPILADO pelo build Netlify para gerar tm-identity-browser.js.
+ANTES DE PUBLICAR: conferir package.json / netlify.toml para verificar se o build recompila automaticamente.
+NAO modifique tm-auth.mjs nem tm-cloud.mjs; mantenha a versão do servidor que já foi publicada.
+NAO apague backups nem limpe dados do navegador.
+Publique e teste primeiro no iPhone, sem alterar dados pedagógicos. Confirme login, feche a aba Safari, reabra e verifique se a sessão continua conectada.
+Se usar navegação privada, bloquear cookies ou o Safari remover dados, pode ser preciso entrar de novo.
